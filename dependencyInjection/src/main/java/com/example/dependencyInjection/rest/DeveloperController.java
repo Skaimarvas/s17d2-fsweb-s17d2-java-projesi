@@ -4,6 +4,7 @@ import com.example.dependencyInjection.model.*;
 import com.example.dependencyInjection.tax.Taxable;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,20 @@ import java.util.Map;
 public class DeveloperController {
 
   private Map<Integer, Developer> developers = new HashMap<>();
+
+  @Value("${info.app.name}")
+  private String appName;
+  @Value("${info.app.description}")
+  private String appDescription;
+
+  @Value("${info.app.version}")
+  private String appVersion;
+
+
+  @GetMapping("/app-info")
+  public String getAppInfo(){
+    return "App Name: " + appName + ", App Description: " + appDescription +", App Version: " + appVersion;
+  }
 
   @Autowired
   private Taxable tax;
