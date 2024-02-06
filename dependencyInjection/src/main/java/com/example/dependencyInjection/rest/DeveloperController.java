@@ -78,6 +78,27 @@ public class DeveloperController {
 
   }
 
+  @PutMapping("/{id}")
+  public void updatedDeveloper(@PathVariable int id, @RequestBody Developer developer){
+    if (developers.containsKey(id)){
+       Developer developer1 = developers.get(id);
+       developer1.setExperience(developer.getExperience());
+       developer1.setName(developer.getName());
+       developer1.setSalary(developer.getSalary());
+    } else {
+      ResponseEntity.status(HttpStatus.CONFLICT).body("There is no developer by this id");
+    }
+  }
+
+  @DeleteMapping("/{id}")
+  public void deleteDeveloper(@PathVariable int id){
+    if(developers.containsKey(id)){
+      developers.remove(id);
+    } else {
+      ResponseEntity.status(HttpStatus.CONFLICT).body("There is no developer by this id");
+    }
+  }
+
 
 
 
