@@ -7,6 +7,9 @@ import com.example.dependencyInjection.model.SeniorDeveloper;
 import com.example.dependencyInjection.tax.Taxable;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -22,6 +25,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/developer")
 public class DeveloperController {
+
   private Map<Integer, Developer> developers = new HashMap<>();
 
   @Autowired
@@ -48,12 +52,17 @@ public class DeveloperController {
   }
 
   @PostMapping
-  public void postDeveloper(@RequestBody Developer developer){
+  public ResponseEntity<String> postDeveloper(@RequestBody Developer developer){
     if(developers.containsKey(developer.getId())){
-      System.out.println("This developer is already exist:" + developers.get(developer.getId()).getName() );
+      String message = "This developer is already exist:" + developers.get(developer.getId()).getName();
+      return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+    } else {
+      developers.put(developer.getId(), developer);
+      String message = "The developer:" + developer.getName() + " was succesfully added";
+      return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+
     }
-    developers.put(developer.getId(), developer);
-    System.out.println("The developer:" + developer.getName() + " was succesfully added");
+
   }
 
 
