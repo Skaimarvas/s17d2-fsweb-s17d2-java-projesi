@@ -30,9 +30,9 @@ public class DeveloperController {
 
   @PostConstruct
   void init(){
-    developers.put(1, new JuniorDeveloper(1,"Micheal Jackson", 4000));
-    developers.put(2, new MidDeveloper(2,"Jason Derulo", 6000));
-    developers.put(3, new SeniorDeveloper(3,"Mikhail Gorbachev", 8000));
+    developers.put(1, new JuniorDeveloper(1,"Micheal Jackson", 4000* tax.getSimpleTaxRate()));
+    developers.put(2, new MidDeveloper(2,"Jason Derulo", 6000* tax.getMiddleTaxRate()));
+    developers.put(3, new SeniorDeveloper(3,"Mikhail Gorbachev", 8000* tax.getUpperTaxRate()));
   }
 
   @GetMapping
@@ -55,17 +55,17 @@ public class DeveloperController {
       return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
     } else {
       if(developer.getExperience().equals(Experience.JUNIOR)){
-        JuniorDeveloper junior = new JuniorDeveloper(developer.getId(),developer.getName(),developer.getSalary());
+        JuniorDeveloper junior = new JuniorDeveloper(developer.getId(),developer.getName(),developer.getSalary()* tax.getSimpleTaxRate());
         developers.put(junior.getId(), junior);
         String message = "The developer: " + junior.getClass().getSimpleName() + " " + developer.getName() + " was succesfully added";
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
       } else if (developer.getExperience().equals(Experience.MID)) {
-        MidDeveloper mid = new MidDeveloper(developer.getId(),developer.getName(),developer.getSalary() );
+        MidDeveloper mid = new MidDeveloper(developer.getId(),developer.getName(),developer.getSalary() * tax.getMiddleTaxRate() );
         developers.put(mid.getId(), mid);
         String message = "The developer: " + mid.getClass().getSimpleName() + " " + developer.getName() + " was succesfully added";
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
       } else if (developer.getExperience().equals(Experience.SENIOR)) {
-        SeniorDeveloper senior = new SeniorDeveloper(developer.getId(),developer.getName(),developer.getSalary());
+        SeniorDeveloper senior = new SeniorDeveloper(developer.getId(),developer.getName(),developer.getSalary()* tax.getUpperTaxRate());
         developers.put(senior.getId(), senior);
         String message = "The developer: " + senior.getClass().getSimpleName() + " " + developer.getName() + " was succesfully added";
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
