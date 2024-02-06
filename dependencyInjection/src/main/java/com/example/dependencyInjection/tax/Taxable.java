@@ -1,5 +1,6 @@
 package com.example.dependencyInjection.tax;
 
+
 public interface Taxable {
 
     abstract double getSimpleTaxRate();
