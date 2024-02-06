@@ -12,23 +12,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class DeveloperTax implements Taxable {
 
-    private JuniorDeveloper juniorDeveloper;
-    private MidDeveloper midDeveloper;
-    private SeniorDeveloper seniorDeveloper;
+
 
 
     @Override
     public double getSimpleTaxRate() {
-        return juniorDeveloper.getSalary() * 0.05 ;
+        return 0.05 ;
     }
 
     @Override
     public double getMiddleTaxRate() {
-        return midDeveloper.getSalary() * 0.10;
+        return 0.10;
     }
 
     @Override
     public double getUpperTaxRate() {
-        return seniorDeveloper.getSalary()* 0.15;
+        return  0.15;
     }
 }
