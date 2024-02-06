@@ -1,9 +1,6 @@
 package com.example.dependencyInjection.rest;
 
-import com.example.dependencyInjection.model.Developer;
-import com.example.dependencyInjection.model.JuniorDeveloper;
-import com.example.dependencyInjection.model.MidDeveloper;
-import com.example.dependencyInjection.model.SeniorDeveloper;
+import com.example.dependencyInjection.model.*;
 import com.example.dependencyInjection.tax.Taxable;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +30,9 @@ public class DeveloperController {
 
   @PostConstruct
   void init(){
-    developers.put(1, new JuniorDeveloper(1,"Micheal Jackson"));
-    developers.put(2, new MidDeveloper(2,"Jason Derulo"));
-    developers.put(3, new SeniorDeveloper(3,"Mikhail Gorbachev"));
+    developers.put(1, new JuniorDeveloper(1,"Micheal Jackson", 4000, Experience.JUNIOR));
+    developers.put(2, new MidDeveloper(2,"Jason Derulo", 6000, Experience.MID));
+    developers.put(3, new SeniorDeveloper(3,"Mikhail Gorbachev", 8000, Experience.SENIOR));
   }
 
   @GetMapping
@@ -52,13 +49,21 @@ public class DeveloperController {
   }
 
   @PostMapping
-  public ResponseEntity<String> postDeveloper(@RequestBody Developer developer){
+  public ResponseEntity<String> addDeveloper(@RequestBody Developer developer){
     if(developers.containsKey(developer.getId())){
       String message = "This developer is already exist:" + developers.get(developer.getId()).getName();
       return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
     } else {
+      if(developer.getExperience().equals(Experience.JUNIOR)){
+        JuniorDeveloper junior = (JuniorDeveloper) developer;
+      } else if (developer.getExperience().equals(Experience.MID)) {
+        MidDeveloper mid = (MidDeveloper)  developer;
+      } else if (developer.getExperience().equals(Experience.SENIOR)) {
+        SeniorDeveloper senior = (SeniorDeveloper) developer;
+      }
+
       developers.put(developer.getId(), developer);
-      String message = "The developer:" + developer.getName() + " was succesfully added";
+      String message = "The developer: " + developer.getClass().getSimpleName() + " " + developer.getName() + " was succesfully added";
       return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
 
     }
