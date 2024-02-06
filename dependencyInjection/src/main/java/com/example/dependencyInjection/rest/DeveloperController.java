@@ -7,9 +7,7 @@ import com.example.dependencyInjection.model.SeniorDeveloper;
 import com.example.dependencyInjection.tax.Taxable;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +16,7 @@ import java.util.Map;
 /**
  * CrossOrigin neden kullanılır?
  * developers = new HashMap<>() olarak oluşturmadığım için nullpointer hatası aldım.
+ * ilk başta @GetMapping("/${id}")  olarak yazdığım için hata aldım.
  */
 
 @RestController
@@ -39,6 +38,25 @@ public class DeveloperController {
   public List<Developer> listAll(){
     return developers.values().stream().toList();
   }
+
+  @GetMapping("/{id}")
+  public Developer findDeveloper(@PathVariable int id){
+    if(developers.containsKey(id)){
+      return developers.get(id);
+    }
+    return null;
+  }
+
+  @PostMapping
+  public void postDeveloper(@RequestBody Developer developer){
+    if(developers.containsKey(developer.getId())){
+      System.out.println("This developer is already exist:" + developers.get(developer.getId()).getName() );
+    }
+    developers.put(developer.getId(), developer);
+    System.out.println("The developer:" + developer.getName() + " was succesfully added");
+  }
+
+
 
 
 
