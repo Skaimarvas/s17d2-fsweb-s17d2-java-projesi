@@ -17,16 +17,16 @@ public class DeveloperTax implements Taxable {
 
     @Override
     public double getSimpleTaxRate() {
-        return 99.5 ;
+        return 0.995 ;
     }
 
     @Override
     public double getMiddleTaxRate() {
-        return 99.0;
+        return 0.99;
     }
 
     @Override
     public double getUpperTaxRate() {
-        return  98.5;
+        return  0.985;
     }
 }
