@@ -60,7 +60,7 @@ public class DeveloperController {
         String message = "The developer: " + junior.getClass().getSimpleName() + " " + developer.getName() + " was succesfully added";
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
       } else if (developer.getExperience().equals(Experience.MID)) {
-        MidDeveloper mid = new MidDeveloper(developer.getId(),developer.getName(),developer.getSalary());
+        MidDeveloper mid = new MidDeveloper(developer.getId(),developer.getName(),developer.getSalary() );
         developers.put(mid.getId(), mid);
         String message = "The developer: " + mid.getClass().getSimpleName() + " " + developer.getName() + " was succesfully added";
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
